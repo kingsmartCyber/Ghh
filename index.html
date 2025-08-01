@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Girlfriend Day! 💐</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .dancing-font {
+            font-family: 'Dancing Script', cursive;
+        }
+        .heart-beat {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .float {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .fade-in {
+            animation: fadeIn 1.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .floating-element {
+            position: absolute;
+            opacity: 0.7;
+            z-index: 0;
+            animation: floatRandom 15s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes floatRandom {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translate(50px, 50px) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+                opacity: 0.7;
+            }
+        }
+        .main-content {
+            position: relative;
+            z-index: 10;
+            flex: 1;
+        }
+        .credit {
+            color: #3b82f6;
+            font-weight: 600;
+            text-align: center;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            width: 100%;
+        }
+        .flower-celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            display: none;
+        }
+        .copy-btn {
+            position: relative;
+        }
+        .copy-btn::after {
+            content: "Copied!";
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #3b82f6;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .copy-btn.copied::after {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="p-4 relative">
+    <!-- Flower celebration container -->
+    <div id="flower-celebration" class="flower-celebration"></div>
+
+    <!-- Main content -->
+    <div class="main-content max-w-md w-full mx-auto bg-white rounded-xl shadow-lg overflow-hidden p-6 text-center fade-in">
+        <!-- Header Section -->
+        <div class="mb-6">
+            <h1 class="text-3xl md:text-4xl font-bold text-blue-500 dancing-font mb-2">Happy Girlfriend Day!</h1>
+            <p class="text-gray-600 text-sm md:text-base">Create a special message for your amazing girlfriend</p>
+            <div class="heart-beat text-4xl my-4" style="color: #3b82f6;">💐</div>
+        </div>
+
+        <!-- Input Section -->
+        <div id="input-section">
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Her beautiful name:</label>
+                <input type="text" id="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-300" placeholder="Enter her name">
+            </div>
+            <button onclick="generateLink()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg text-sm md:text-base">
+                Create Special Message
+            </button>
+        </div>
+
+        <!-- Result Section (Hidden Initially) -->
+        <div id="result-section" class="hidden mt-6">
+            <div class="bg-blue-50 rounded-lg p-4 mb-4 border border-blue-200">
+                <h2 class="text-xl md:text-2xl font-bold text-blue-600 mb-3 dancing-font" id="greeting"></h2>
+                <p class="text-gray-700 text-base mb-3" id="wish-text"></p>
+                <div class="float text-3xl my-2" id="wish-emoji" style="color: #3b82f6;"></div>
+            </div>
+
+            <div class="mb-4">
+                <p class="text-gray-600 text-sm mb-2">Share this special page with her:</p>
+                <div class="flex items-center">
+                    <input type="text" id="generated-link" class="flex-grow px-3 py-1 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-300 text-xs md:text-sm" readonly>
+                    <button onclick="copyLink()" class="copy-btn bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-r-lg transition-colors duration-300 text-sm md:text-base">
+                        Copy
+                    </button>
+                </div>
+            </div>
+
+            <button onclick="resetForm()" class="text-blue-600 hover:text-blue-800 font-medium text-sm md:text-base">
+                Create another message
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer with credits -->
+    <footer class="credit mt-4">
+        Made with 💙 by denoo
+    </footer>
+
+    <!-- Floating background elements -->
+    <div class="floating-element" style="top: 10%; left: 5%; font-size: 20px;">🌸</div>
+    <div class="floating-element" style="top: 20%; right: 8%; font-size: 24px; color: #3b82f6;">💙</div>
+    <div class="floating-element" style="bottom: 15%; left: 10%; font-size: 28px;">🌷</div>
+    <div class="floating-element" style="bottom: 25%; right: 5%; font-size: 22px; color: #3b82f6;">💎</div>
+
+    <script>
+        const wishes = [
+            {text: "You make every day brighter just by being in it. I'm so grateful for you!", emoji: "☀️"},
+            {text: "My heart skips a beat every time I see your smile. You're my everything.", emoji: "💓"},
+            {text: "I fall in love with you more each day. Thank you for being you!", emoji: "🥰"},
+            {text: "You're not just my girlfriend, you're my favorite person in the whole world.", emoji: "🌎"},
+            {text: "Every moment with you feels like a beautiful dream I never want to wake up from.", emoji: "✨"},
+            {text: "Your love is the greatest gift I've ever received. I cherish you completely.", emoji: "🎁"},
+            {text: "I didn't know what true happiness was until I met you. You complete me.", emoji: "❤️"}
+        ];
+
+        function generateLink() {
+            const name = document.getElementById('name').value.trim();
+            if (!name) {
+                alert("Please enter her beautiful name!");
+                return;
+            }
+
+            // Generate consistent wish for this name
+            const nameHash = hashCode(name);
+            const randomIndex = nameHash % wishes.length;
+            const randomWish = wishes[randomIndex];
+            
+            // Update the display
+            document.getElementById('greeting').textContent = `Dear ${name},`;
+            document.getElementById('wish-text').textContent = randomWish.text;
+            document.getElementById('wish-emoji').textContent = randomWish.emoji;
+            
+            // Create simple shareable link with just name
+            const encodedName = encodeURIComponent(name);
+            const link = `${window.location.origin}${window.location.pathname}?name=${encodedName}`;
+            document.getElementById('generated-link').value = link;
+            
+            // Show result section
+            document.getElementById('input-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+        }
+
+        function hashCode(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash |= 0;
+            }
+            return Math.abs(hash);
+        }
+
+        function copyLink() {
+            const linkInput = document.getElementById('generated-link');
+            linkInput.select();
+            document.execCommand('copy');
+            
+            // Show copied feedback
+            const copyBtn = document.querySelector('.copy-btn');
+            copyBtn.classList.add('copied');
+            setTimeout(() => {
+                copyBtn.classList.remove('copied');
+            }, 2000);
+        }
+
+        function resetForm() {
+            document.getElementById('input-section').classList.remove('hidden');
+            document.getElementById('result-section').classList.add('hidden');
+            document.getElementById('name').value = '';
+        }
+
+        function createFlowerCelebration() {
+            const container = document.getElementById('flower-celebration');
+            container.style.display = 'block';
+            container.innerHTML = '';
+            
+            const flowers = ['🌸', '🌹', '💐', '🌺', '🌷', '🥀', '💮', '🏵️'];
+            
+            for (let i = 0; i < 50; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'absolute text-3xl';
+                flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+                
+                // Random starting position
+                const startX = Math.random() * 100;
+                const startY = Math.random() * 100;
+                
+                // Random animation
+                const duration = 2 + Math.random() * 3;
+                const delay = Math.random() * 2;
+                
+                flower.style.left = `${startX}%`;
+                flower.style.top = `${startY}%`;
+                flower.style.animation = `fall ${duration}s ease-in ${delay}s forwards`;
+                
+                // Add animation style
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes fall {
+                        0% {
+                            transform: translate(0, -100px) rotate(0deg);
+                            opacity: 1;
+                        }
+                        100% {
+                            transform: translate(${Math.random() * 200 - 100}px, 100vh) rotate(360deg);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                container.appendChild(flower);
+            }
+            
+            setTimeout(() => {
+                container.style.display = 'none';
+            }, 5000);
+        }
+
+        // Check for URL parameters to show wish directly
+        window.onload = function() {
+            // Add more floating elements dynamically
+            for (let i = 0; i < 6; i++) {
+                createFloatingElement();
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const name = urlParams.get('name');
+            
+            if (name) {
+                // Generate the same wish that was originally created for this name
+                const nameHash = hashCode(name);
+                const randomIndex = nameHash % wishes.length;
+                const randomWish = wishes[randomIndex];
+                
+                document.getElementById('name').value = name;
+                document.getElementById('greeting').textContent = `Dear ${name},`;
+                document.getElementById('wish-text').textContent = randomWish.text;
+                document.getElementById('wish-emoji').textContent = randomWish.emoji;
+                document.getElementById('generated-link').value = window.location.href;
+                
+                document.getElementById('input-section').classList.add('hidden');
+                document.getElementById('result-section').classList.remove('hidden');
+                
+                // Trigger flower celebration
+                createFlowerCelebration();
+            }
+        };
+
+        function createFloatingElement() {
+            const element = document.createElement('div');
+            element.className = 'floating-element';
+            
+            const flowers = ['🌸', '🌹', '💐', '🌺', '🌷', '🥀', '💮', '🏵️'];
+            const blues = ['💙', '💎', '🔷', '💠', '🦋', '🌀', '🌊'];
+            const allEmojis = [...flowers, ...blues];
+            
+            const emoji = allEmojis[Math.floor(Math.random() * allEmojis.length)];
+            element.textContent = emoji;
+            
+            // Random position
+            const top = Math.random() * 100;
+            const left = Math.random() * 100;
+            const size = 16 + Math.random() * 24;
+            
+            element.style.top = `${top}%`;
+            element.style.left = `${left}%`;
+            element.style.fontSize = `${size}px`;
+            
+            // Set blue color for blue-themed emojis
+            if (blues.includes(emoji)) {
+                element.style.color = '#3b82f6';
+            }
+            
+            // Random animation duration
+            const duration = 10 + Math.random() * 20;
+            element.style.animationDuration = `${duration}s`;
+            
+            document.body.appendChild(element);
+        }
+    </script>
+</body>
+</html>
