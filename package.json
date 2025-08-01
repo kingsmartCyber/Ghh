@@ -1,7 +1,7 @@
 {
   "name": "hgd",
   "version": "1.0.0",
-  "main": "main",
+  "main": "./index.js",
   "scripts": {
     "start":  "node index.js"
   },
